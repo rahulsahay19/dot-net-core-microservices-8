@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Discount.Infrastructure\Discount.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
