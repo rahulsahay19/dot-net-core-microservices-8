@@ -32,8 +32,6 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.UseAuthorization();
-
 app.UseRouting();
 
 app.UseEndpoints(endpoints =>
