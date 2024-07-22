@@ -12,7 +12,8 @@ namespace Ordering.Infrastructure.Extensions
         public static IServiceCollection AddInfraServices(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
             serviceCollection.AddDbContext<OrderContext>(options => options.UseSqlServer(
-                configuration.GetConnectionString("OrderingConnectionString")));
+                configuration.GetConnectionString("OrderingConnectionString"),
+                sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
             serviceCollection.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
             serviceCollection.AddScoped<IOrderRepository, OrderRepository>();
             return serviceCollection;
