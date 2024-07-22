@@ -34,18 +34,18 @@ services:
 
   orderdb:
     container_name: orderdb
-    image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       SA_PASSWORD: "Rahul1234567"
       ACCEPT_EULA: "Y"
+    restart: always
     ports:
       - "1433:1433"
     healthcheck:
-      test: ["CMD-SHELL", "dotnet --info"]
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Rahul1234567' -Q 'select 1'"]
       interval: 10s
-      timeout: 5s
+      timeout: 10s
       retries: 3
-    restart: always
+
 
   catalog.api:
     container_name: catalog.api
@@ -87,13 +87,11 @@ services:
     container_name: ordering.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings__OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=Rahul1234567"     
+      - "ConnectionStrings__OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=Rahul1234567;TrustServerCertificate=True"     
     depends_on:
       - orderdb      
     ports:
-      - "8003:8080" 
-    command: >
-      /bin/sh -c "dotnet ef database update -p ../Ordering.Infrastructure -s ../Ordering.API && dotnet Ordering.API.dll"
+      - "8003:8080"     
 
   
   pgadmin:
