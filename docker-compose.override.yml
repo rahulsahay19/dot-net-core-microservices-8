@@ -46,53 +46,12 @@ services:
       timeout: 10s
       retries: 3
 
-
-  catalog.api:
-    container_name: catalog.api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "DatabaseSettings__ConnectionString=mongodb://catalogdb:27017"
-      - "DatabaseSettings__DatabaseName=CatalogDb"
-      - "DatabaseSettings__CollectionName=Products"
-      - "DatabaseSettings__BrandsCollection=Brands"
-      - "DatabaseSettings__TypesCollection=Types"      
-    depends_on:
-      - catalogdb
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
     ports:
-      - "8000:8080"
-
-  basket.api:
-    container_name: basket.api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "CacheSettings__ConnectionString=basketdb:6379"
-      - "GrpcSettings__DiscountUrl=http://discount.api:8080" 
-    depends_on:
-      - basketdb      
-    ports:
-      - "8001:8080"
-
-  discount.api:
-    container_name: discount.api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "DatabaseSettings__ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=Password@1;"      
-    depends_on:
-       discountdb:
-         condition: service_healthy
-    ports:
-      - "8002:8080"
-
-  ordering.api:
-    container_name: ordering.api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings__OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=Rahul1234567;TrustServerCertificate=True"     
-    depends_on:
-      - orderdb      
-    ports:
-      - "8003:8080"     
-
+      - "5672:5672"
+      - "15672:15672"
   
   pgadmin:
     container_name: pgadmin
@@ -115,6 +74,59 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+
+  catalog.api:
+    container_name: catalog.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings__ConnectionString=mongodb://catalogdb:27017"
+      - "DatabaseSettings__DatabaseName=CatalogDb"
+      - "DatabaseSettings__CollectionName=Products"
+      - "DatabaseSettings__BrandsCollection=Brands"
+      - "DatabaseSettings__TypesCollection=Types"      
+    depends_on:
+      - catalogdb
+    ports:
+      - "8000:8080"
+
+  basket.api:
+    container_name: basket.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CacheSettings__ConnectionString=basketdb:6379"
+      - "GrpcSettings__DiscountUrl=http://discount.api:8080" 
+      - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+      - basketdb
+      - rabbitmq
+    ports:
+      - "8001:8080"
+
+  discount.api:
+    container_name: discount.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings__ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=Password@1;"      
+    depends_on:
+       discountdb:
+         condition: service_healthy
+    ports:
+      - "8002:8080"
+
+  ordering.api:
+    container_name: ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings__OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=Rahul1234567;TrustServerCertificate=True" 
+      - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+      - orderdb
+      - rabbitmq 
+    ports:
+      - "8003:8080"   
+
+  
+  
   
   
 
