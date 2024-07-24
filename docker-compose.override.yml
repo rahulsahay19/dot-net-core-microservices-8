@@ -128,8 +128,6 @@ services:
   elasticsearch:
     container_name: elasticsearch
     environment:
-      - xpack.monitoring.enabled=true
-      - xpack.watcher.enabled=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.type=single-node
     ports:
@@ -145,9 +143,3 @@ services:
       - elasticsearch
     ports:
       - "5601:5601"  
-  
-  
-  
-
- 
-
