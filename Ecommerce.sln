@@ -49,7 +49,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Infrastructure", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{F4B98907-CB86-41CB-B761-21B9B6BD1014}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus.Messages", "Infrastructure\EventBus.Messages\EventBus.Messages.csproj", "{88E774EB-4576-4162-895D-FFBA55E8CE6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.Messages", "Infrastructure\EventBus.Messages\EventBus.Messages.csproj", "{88E774EB-4576-4162-895D-FFBA55E8CE6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Logging", "Infrastructure\Common.Logging\Common.Logging.csproj", "{D6A65CEB-FC22-4133-9530-EE4BD02430BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +131,10 @@ Global
 		{88E774EB-4576-4162-895D-FFBA55E8CE6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88E774EB-4576-4162-895D-FFBA55E8CE6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88E774EB-4576-4162-895D-FFBA55E8CE6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6A65CEB-FC22-4133-9530-EE4BD02430BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A65CEB-FC22-4133-9530-EE4BD02430BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A65CEB-FC22-4133-9530-EE4BD02430BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A65CEB-FC22-4133-9530-EE4BD02430BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,6 +161,7 @@ Global
 		{37779683-A48C-4CD1-89EC-4C682E0D23F9} = {C9FC9102-89D4-4D3B-82F6-682A0AFBBD5F}
 		{7C81BCA1-24A4-482F-AE77-16040AFB3CC6} = {C9FC9102-89D4-4D3B-82F6-682A0AFBBD5F}
 		{88E774EB-4576-4162-895D-FFBA55E8CE6F} = {F4B98907-CB86-41CB-B761-21B9B6BD1014}
+		{D6A65CEB-FC22-4133-9530-EE4BD02430BB} = {F4B98907-CB86-41CB-B761-21B9B6BD1014}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D5C60582-55B0-4645-95D5-C8DE4F7E7664}
