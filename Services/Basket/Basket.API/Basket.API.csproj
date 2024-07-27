@@ -11,6 +11,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+		<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.1" />
 		<PackageReference Include="MassTransit" Version="7.3.1" />
 		<PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
