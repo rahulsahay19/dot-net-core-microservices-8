@@ -66,6 +66,6 @@ spec:
     app: catalog-api
   ports:
     - protocol: TCP
-      port: 9000
+      port: 8000
       targetPort: 80
       nodePort: 31000
