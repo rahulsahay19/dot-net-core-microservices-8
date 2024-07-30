@@ -16,7 +16,7 @@ Write-Host "Installation using Helm started" -ForegroundColor Green
 
 $infras = ("basketdb", "catalogdb", "discountdb", "elasticsearch", "kibana", "orderdb", "rabbitmq")
 $apis = ("basket","catalog", "ordering", "discount")
-$gateways = ("ocelotapigw")
+# $gateways = ("ocelotapigw")
 
 
 foreach ($infra in $infras) {
@@ -30,9 +30,9 @@ foreach ($api in $apis) {
     Install-Chart $api
 }
 
-foreach ($gateway in $gateways) {
-    Write-Host "Installing: $gateway" -ForegroundColor Green
-    Install-Chart $gateway
-}
+# foreach ($gateway in $gateways) {
+#     Write-Host "Installing: $gateway" -ForegroundColor Green
+#     Install-Chart $gateway
+# }
 
 Write-Host "helm charts installed." -ForegroundColor Green
