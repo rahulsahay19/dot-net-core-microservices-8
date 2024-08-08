@@ -26,7 +26,8 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+podAnnotations:
+  sidecar.istio.io/inject: "false"
 
 podSecurityContext: {}
   # fsGroup: 2000
@@ -41,7 +42,11 @@ securityContext: {}
 
 service:
   type: LoadBalancer
-  port: 80
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80        # This is the external port exposed by the LoadBalancer
+      targetPort: 8080  # This should match the container's internal listening port
 
 ingress:
   enabled: false
