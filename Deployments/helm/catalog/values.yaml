@@ -42,11 +42,7 @@ securityContext: {}
 
 service:
   type: LoadBalancer
-  ports:
-    - name: http
-      protocol: TCP
-      port: 80        # This is the external port exposed by the LoadBalancer
-      targetPort: 8080  # This should match the container's internal listening port
+  port: 80
 
 ingress:
   enabled: false
