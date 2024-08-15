@@ -13,7 +13,7 @@ export class StoreService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl = 'http://localhost:8000/api/v1/';
+  baseUrl = 'http://localhost:8010/';
 
   getProductById(id:string){
     return this.http.get<IProduct>(this.baseUrl + 'Catalog/GetProductById/' +id );
