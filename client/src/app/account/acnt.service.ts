@@ -5,6 +5,7 @@ import { ReplaySubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { User, UserManager, UserManagerSettings } from 'oidc-client';
 import { Constants } from './constants';
+import { MsalService } from '@azure/msal-angular';
 
 
 @Injectable({
@@ -21,11 +22,15 @@ export class AcntService {
   token = "";
   access_token = "";
 
-  constructor(private http: HttpClient, private router: Router) {
-    this.manager.getUser().then(user => {
-      this.user = user;
-      this.currentUserSource.next(this.isAuthenticated());
-    });
+  constructor(private http: HttpClient, private router: Router, private msalService: MsalService) {
+    // this.manager.getUser().then(user => {
+    //   this.user = user;
+    //   this.currentUserSource.next(this.isAuthenticated());
+    // });
+    //Check if user is already logged in & set user state accordingly
+    if(this.msalService.instance.getActiveAccount()){
+      this.currentUserSource.next(this.msalService.instance.getActiveAccount())
+    }
   }
 
   isAuthenticated(): boolean {
