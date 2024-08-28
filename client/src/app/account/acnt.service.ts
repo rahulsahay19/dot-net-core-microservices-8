@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { User, UserManager, UserManagerSettings } from 'oidc-client';
 import { Constants } from './constants';
 import { MsalService } from '@azure/msal-angular';
+import { AuthenticationResult } from '@azure/msal-browser';
 
 
 @Injectable({
@@ -19,8 +20,8 @@ export class AcntService {
   currentUser$ = this.currentUserSource.asObservable();
   private manager = new UserManager(getClientSettings());
   private user: User | null;
-  token = "";
-  access_token = "";
+  // token = "";
+  // access_token = "";
 
   constructor(private http: HttpClient, private router: Router, private msalService: MsalService) {
     // this.manager.getUser().then(user => {
@@ -34,37 +35,48 @@ export class AcntService {
   }
 
   isAuthenticated(): boolean {
-    return this.user != null && !this.user.expired;
+   // return this.user != null && !this.user.expired;
+   return this.msalService.instance.getActiveAccount() !== null;
   }
 
   login() {
-    return this.manager.signinRedirect();
+    //return this.manager.signinRedirect();
+    return this.msalService.loginRedirect();
   }
 
   async signout() {
     await this.manager.signoutRedirect();
   }
 
-  get authorizationHeaderValue(): string {
-    console.log(this.token);
-    console.log(this.access_token);
-    return `${this.token} ${this.access_token}`;
+  get authorizationHeaderValue(): Promise<string> {
+    const account = this.msalService.instance.getActiveAccount();
+    if (account) {
+      return this.msalService.instance.acquireTokenSilent({
+        scopes: ["openid", "profile", "https://sportscenter19.onmicrosoft.com/85ec0233-0ecb-4830-96f5-12d00bf87176"],
+        account: account
+      }).then((result: AuthenticationResult) => {
+        return `${result.tokenType} ${result.accessToken}`;
+      });
+    }
+    // Return an empty string if no account is found
+    return Promise.resolve(''); 
   }
 
   logout() {
-    localStorage.removeItem('token');
+    //localStorage.removeItem('token');
+    this.msalService.loginRedirect();
     this.currentUserSource.next(null);
     this.router.navigateByUrl('/');
   }
-  public finishLogin = (): Promise<User> => {
-    return this.manager.signinRedirectCallback()
-    .then(user => {
-      this.currentUserSource.next(this.checkUser(user));
-      this.token = user.token_type;
-      this.access_token = user.access_token;
-      return user;
-    })
-  }
+  // public finishLogin = (): Promise<User> => {
+  //   return this.manager.signinRedirectCallback()
+  //   .then(user => {
+  //     this.currentUserSource.next(this.checkUser(user));
+  //     this.token = user.token_type;
+  //     this.access_token = user.access_token;
+  //     return user;
+  //   })
+  // }
 
   public finishLogout = () => {
     this.user = null;
