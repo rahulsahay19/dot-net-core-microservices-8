@@ -16,7 +16,7 @@ export class AcntService {
 
   // We need to have something which won't emit initial value rather wait till it has something.
   // Hence for that ReplaySubject. I have given to hold one user object and it will cache this as well
-  private currentUserSource = new ReplaySubject<any>(1);
+  public currentUserSource = new ReplaySubject<any>(1);
   currentUser$ = this.currentUserSource.asObservable();
   private manager = new UserManager(getClientSettings());
   private user: User | null;
@@ -40,11 +40,21 @@ export class AcntService {
   }
 
   login() {
-    //return this.manager.signinRedirect();
-    return this.msalService.loginRedirect();
+    const state = this.router.url;  // Capture the current URL to pass as state
+    this.msalService.loginRedirect({
+      scopes: ["openid", "profile", "https://sportscenter19.onmicrosoft.com/85ec0233-0ecb-4830-96f5-12d00bf87176"]
+    //  state: state  // Pass the current route as the state parameter
+    });
+  }
+  
+  logout() {
+    this.msalService.logoutRedirect({
+      postLogoutRedirectUri: 'http://localhost:4200',  // Replace with your post-logout redirect URI
+    });
+    this.currentUserSource.next(null);  // Emit null to clear the current user
   }
 
-  async signout() {
+  async   signout() {
     await this.manager.signoutRedirect();
   }
 
@@ -52,7 +62,7 @@ export class AcntService {
     const account = this.msalService.instance.getActiveAccount();
     if (account) {
       return this.msalService.instance.acquireTokenSilent({
-        scopes: ["openid", "profile", "https://sportscenter19.onmicrosoft.com/85ec0233-0ecb-4830-96f5-12d00bf87176"],
+        scopes: ["openid", "profile"],
         account: account
       }).then((result: AuthenticationResult) => {
         return `${result.tokenType} ${result.accessToken}`;
@@ -62,12 +72,7 @@ export class AcntService {
     return Promise.resolve(''); 
   }
 
-  logout() {
-    //localStorage.removeItem('token');
-    this.msalService.loginRedirect();
-    this.currentUserSource.next(null);
-    this.router.navigateByUrl('/');
-  }
+  
   // public finishLogin = (): Promise<User> => {
   //   return this.manager.signinRedirectCallback()
   //   .then(user => {
