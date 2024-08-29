@@ -14,10 +14,10 @@ export class SignoutRedirectCallbackComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.acntService.finishLogout()
-    .then(_ => {
-      this._router.navigate(['/'], { replaceUrl: true });
-    })
+    // this.acntService.finishLogout()
+    // .then(_ => {
+    //   this._router.navigate(['/'], { replaceUrl: true });
+    // })
   }
 
 }

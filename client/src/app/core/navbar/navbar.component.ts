@@ -30,6 +30,6 @@ export class NavbarComponent implements OnInit {
     this.acntService.login();
   }
   public logout = () => {
-    this.acntService.signout();
+    this.acntService.logout();
   }
 }
