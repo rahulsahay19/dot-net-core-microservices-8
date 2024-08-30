@@ -18,10 +18,15 @@ export class AcntService {
   // Hence for that ReplaySubject. I have given to hold one user object and it will cache this as well
   public currentUserSource = new ReplaySubject<any>(1);
   currentUser$ = this.currentUserSource.asObservable();
-  constructor(private http: HttpClient, private router: Router, private msalService: MsalService) {
-   //Check if user is already logged in & set user state accordingly
-    if(this.msalService.instance.getActiveAccount()){
-      this.currentUserSource.next(this.msalService.instance.getActiveAccount())
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private msalService: MsalService
+  ) {
+    // Set user state if already logged in
+    const account = this.msalService.instance.getActiveAccount();
+    if (account) {
+      this.currentUserSource.next(account);
     }
   }
 
@@ -35,6 +40,7 @@ export class AcntService {
     this.msalService.loginRedirect({
       scopes: ["openid", "profile", "https://sportscenter19.onmicrosoft.com/85ec0233-0ecb-4830-96f5-12d00bf87176"]
     });
+    //this.currentUserSource.next(this.msalService.instance.getActiveAccount());
   }
   
   logout() {
@@ -43,6 +49,16 @@ export class AcntService {
     });
     this.currentUserSource.next(null);  // Emit null to clear the current user
   }
+
+  setUserAfterRedirect(): void {
+    const account = this.msalService.instance.getActiveAccount();
+    console.log('Active Account after Redirect:', account); // Debugging: Log the account info
+    if (account) {
+        this.currentUserSource.next(account);
+    } else {
+        this.currentUserSource.next(null);
+    }
+}
 
  get authorizationHeaderValue(): Promise<string> {
     const account = this.msalService.instance.getActiveAccount();

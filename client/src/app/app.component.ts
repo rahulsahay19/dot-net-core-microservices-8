@@ -22,16 +22,17 @@ export class AppComponent implements OnInit {
     await this.initializeMsal();
     // Handle MSAL redirect response
     this.msalService.instance.handleRedirectPromise().then((result) => {
-      if (result) {
-        this.acntService.currentUserSource.next(this.msalService.instance.getActiveAccount());
+      if (result && result.account) {
         console.log('Login successful:', result);
+        this.msalService.instance.setActiveAccount(result.account); // Manually set the active account
+        this.acntService.setUserAfterRedirect(); // Update the user state
       } else {
-        console.log('No redirect login result, app started normally.');
+        console.log('No account in result or no redirect result.');
+        this.acntService.setUserAfterRedirect(); // Try to retrieve active account
       }
     }).catch((error) => {
       console.error('Error handling redirect:', error);
     });
-
     // Existing logic to load the basket
     const basket_username = localStorage.getItem('basket_username');
     if (basket_username) {

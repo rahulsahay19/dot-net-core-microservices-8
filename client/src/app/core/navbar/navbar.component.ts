@@ -9,27 +9,31 @@ import { IBasketItem } from 'src/app/shared/models/basket';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  constructor(public basketService: BasketService, private acntService: AcntService){}
-  ngOnInit(): void {
-
-    console.log(`current user:`);
-    this.acntService.currentUser$.subscribe({
-      next:(res) =>{
-        this.isUserAuthenticated = res;
-        console.log(this.isUserAuthenticated);
-      },error:(err) =>{
-        console.log(`An error occurred while setting isUserAuthenticated flag.`)
-      }
-    })
-  }
   public isUserAuthenticated: boolean = false;
-  getBasketCount(items: IBasketItem[]){
-    return items.reduce((sum, item)=>sum + item.quantity, 0);
+
+  constructor(public basketService: BasketService, private acntService: AcntService) {}
+
+  ngOnInit(): void {
+    this.acntService.currentUser$.subscribe({
+      next: (user) => {
+        this.isUserAuthenticated = !!user;  // true if user is logged in, false otherwise
+        console.log(`User authenticated: ${this.isUserAuthenticated}`);
+      },
+      error: (err) => {
+        console.log(`An error occurred while setting isUserAuthenticated flag: ${err}`);
+      }
+    });
   }
-  public login = () => {
+
+  getBasketCount(items: IBasketItem[]): number {
+    return items.reduce((sum, item) => sum + item.quantity, 0);
+  }
+
+  public login(): void {
     this.acntService.login();
   }
-  public logout = () => {
+
+  public logout(): void {
     this.acntService.logout();
   }
 }
