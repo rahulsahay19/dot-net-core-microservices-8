@@ -35,10 +35,10 @@ export class AcntService {
    return this.msalService.instance.getActiveAccount() !== null;
   }
 
-  login() {
-    const state = this.router.url;  // Capture the current URL to pass as state
-    this.msalService.loginRedirect({
-      scopes: ["openid", "profile", "https://sportscenter19.onmicrosoft.com/85ec0233-0ecb-4830-96f5-12d00bf87176"]
+  login(state?: string) {
+      this.msalService.loginRedirect({
+      scopes: ["openid", "profile", "https://sportscenter19.onmicrosoft.com/85ec0233-0ecb-4830-96f5-12d00bf87176"],
+      state: state
     });
     //this.currentUserSource.next(this.msalService.instance.getActiveAccount());
   }

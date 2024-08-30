@@ -3,6 +3,7 @@ import { AcntService } from './account/acnt.service';
 import { BasketService } from './basket/basket.service';
 import { MsalService } from '@azure/msal-angular';
 import { BrowserCacheLocation, PublicClientApplication } from '@azure/msal-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ export class AppComponent implements OnInit {
   constructor(
     private basketService: BasketService, 
     private acntService: AcntService,
-    private msalService: MsalService
+    private msalService: MsalService,
+    private router: Router
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -24,7 +26,12 @@ export class AppComponent implements OnInit {
     this.msalService.instance.handleRedirectPromise().then((result) => {
       if (result && result.account) {
         console.log('Login successful:', result);
-        this.msalService.instance.setActiveAccount(result.account); // Manually set the active account
+        // Navigate to the state URL if it exists
+        const targetRoute = result.state || '/';
+        console.log('Navigating to:', targetRoute);
+        this.router.navigate([targetRoute]);
+        // Set the active account and update user state
+        this.msalService.instance.setActiveAccount(result.account); 
         this.acntService.setUserAfterRedirect(); // Update the user state
       } else {
         console.log('No account in result or no redirect result.');

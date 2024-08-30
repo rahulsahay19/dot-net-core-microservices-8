@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AcntService } from '../account/acnt.service';
 import { BasketService } from '../basket/basket.service';
 import { IBasket, IBasketItem } from '../shared/models/basket';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -10,17 +11,24 @@ import { IBasket, IBasketItem } from '../shared/models/basket';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
-  constructor(public basketService: BasketService, private acntService: AcntService){}
+  constructor(
+    public basketService: BasketService,
+    private acntService: AcntService,
+    private router: Router){}
 
   ngOnInit(): void {
     this.acntService.currentUser$.subscribe({
-      next:(res) =>{
-        this.isUserAuthenticated = res;
-        console.log(this.isUserAuthenticated);
-      },error:(err) =>{
-        console.log(`An error occurred while setting isUserAuthenticated flag.`)
+      next: (user) => {
+        this.isUserAuthenticated = !!user;
+        if (!this.isUserAuthenticated) {
+          // If the user is not authenticated, trigger the login process
+          this.acntService.login(this.router.url);
+        }
+      },
+      error: (err) => {
+        console.log(`An error occurred while setting isUserAuthenticated flag: ${err}`);
       }
-    })
+    });
   }
   public isUserAuthenticated: boolean = false;
 
