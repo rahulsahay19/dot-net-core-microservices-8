@@ -50,19 +50,17 @@ Having a basic understanding of C#, Docker, and Angular would be really helpful!
 
 ## Course Links:
 
-- [Creating .Net Core Microservices using Clean Architecture](https://www.udemy.com/course/creating-net-core-microservices-using-clean-architecture/?couponCode=4A34780465CCCF111414)
+- [Creating .Net Core Microservices using Clean Architecture](https://www.udemy.com/course/creating-net-core-microservices-using-clean-architecture/?couponCode=2CCD4C46CD20A6C4BAE0)
   
-- [Building FullStack E-Commerce App using SpringBoot & React](https://www.udemy.com/course/building-fullstack-e-commerce-app-using-springboot-react/?couponCode=3D20AF08F49D78B0EA9F)
+- [Building FullStack E-Commerce App using SpringBoot & React](https://www.udemy.com/course/building-fullstack-e-commerce-app-using-springboot-react/?couponCode=3570F02B303375EAF4B1)
 
-- [Building FullStack E-Commerce App using SpringBoot & Angular](https://www.udemy.com/course/building-fullstack-ecommerce-app-using-springboot-angular/?couponCode=F28737CA6866FE8511CD)
+- [Building FullStack E-Commerce App using SpringBoot & Angular](https://www.udemy.com/course/building-fullstack-ecommerce-app-using-springboot-angular/?couponCode=6B219FD3BDD2D7EEDAAF)
 
-- [Building FullStack App using .NetCore, Angular & ChatGPT](https://www.udemy.com/course/building-fullstack-app-using-netcore-angular-chatgpt/?couponCode=5760E3767FB037609F00)
+- [Building FullStack App using .NetCore, Angular & ChatGPT](https://www.udemy.com/course/building-fullstack-app-using-netcore-angular-chatgpt/?couponCode=CFCABDEFE5600A6EB267)
 
-- [Building FullStack App using .NetCore, Angular & ChatGPT](https://www.udemy.com/course/building-fullstack-app-using-netcore-angular-chatgpt/?couponCode=F4A100B942A8A7BBA0C9)
+- [Docker & Kubernetes for .Net and Angular Developers](https://www.udemy.com/course/docker-for-net-and-angular-developers/?couponCode=3649D0167235A8D11778)
 
-- [Docker & Kubernetes for .Net and Angular Developers](https://www.udemy.com/course/docker-for-net-and-angular-developers/?couponCode=E80241AEE66E85B274CD)
-
-- [AI Mastery Unleashed: ChatGPT and Beyond](https://www.udemy.com/course/ai-mastery-unleashed-chatgpt-and-beyond/?couponCode=7BC7A7C7F1348D181D90)
+- [AI Mastery Unleashed: ChatGPT and Beyond](https://www.udemy.com/course/ai-mastery-unleashed-chatgpt-and-beyond/?couponCode=321CE2D0B80CB60D9F32)
 
 ## Blog
 
